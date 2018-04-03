@@ -176,6 +176,16 @@ class ShortKlineDownload(object):
         ignoreFirst = False
         try:
             oldest_time, ignoreFirst = self.__contentParse(content, ignoreFirst, self.end_date)
+            if (self.kline_type not in [Period.WEEK, Period.MONTH, Period.YEAR] and self.kline_list[0].utc_time != self.end_date):
+                json_dict = {}
+                json_dict["open"] = self.kline_list[0].close
+                json_dict["high"] = self.kline_list[0].close
+                json_dict["low"] = self.kline_list[0].close
+                json_dict["close"] = self.kline_list[0].close
+                json_dict["time"] = self.end_date
+                line = Kline(self.kline_type)
+                line.load(json_dict)
+                self.kline_list.insert(0, line)
             while (len(oldest_time) > 0 and int(oldest_time) > int(self.start_date)):
                 content = self.__requestKline(oldest_time, self.kline_type, self.code)
                 oldest_time, ignoreFirst = self.__contentParse(content, ignoreFirst, oldest_time)
