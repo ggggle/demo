@@ -79,7 +79,7 @@ void test1()
 }
 
 
-int main()
+int mai2n()
 {
 	int arr[5] = { 1,2,3,4,5 };
 	cout << sum(arr) << endl; //这里调用时，自动将10传递给size，作为数组元素个数  

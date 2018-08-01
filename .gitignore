@@ -1,0 +1,8 @@
+*.o
+*.VC.db
+*.opendb
+Debug
+Release
+.vs
+.svn
+.idea
