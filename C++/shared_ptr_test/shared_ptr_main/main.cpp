@@ -4,11 +4,10 @@
 #include "../shared_ptr_test/sdk.h"
 #include "../shared_ptr_test/export.h"
 
-
-int main()
+vector<VBasePtr> ptr_v;
+int Test1()
 {
-	vector<VBasePtr> ptr_v;
-	auto itr = CreateVBase(QUEUE);
+	auto itr = CreateVBase(STACK);
 	itr->InPut('a');
 	itr->InPut('b');
 	itr->InPut('c');
@@ -28,5 +27,14 @@ int main()
 	// 需要显示调用delete
 	delete itr;
 #endif // !USE_SHARED_PTR
+	return 0;
+}
+
+int main()
+{
+	Test1();
+	ptr_v.clear();
+	cout << "clear" << endl;
+	cout << "end" << endl;
 	return 0;
 }
