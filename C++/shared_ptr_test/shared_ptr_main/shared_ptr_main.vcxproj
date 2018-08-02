@@ -80,6 +80,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>shared_ptr_dll_test.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

@@ -19,5 +19,5 @@ enum Type
 
 extern "C"
 {
-	VBasePtr* __stdcall CreateVBase(Type t);
+	int __stdcall CreateVBase(const Type t, VBasePtr& ptr);
 }
