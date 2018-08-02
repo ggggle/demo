@@ -2,15 +2,21 @@
 #include "export.h"
 #include "sdk_impl.h"
 
-VBasePtr __stdcall CreateVBase(Type t)
+extern "C" VBasePtr* __stdcall CreateVBase(Type t)
 {
 #ifdef USE_SHARED_PTR
+	VBasePtr ptr;
 	switch (t)
 	{
 	case QUEUE:
-		return dynamic_pointer_cast<VBase>(make_shared<Queue>());
+		ptr = dynamic_pointer_cast<VBase>(make_shared<Queue>());
+		return &ptr;
+		break;
 	case STACK:
-		return dynamic_pointer_cast<VBase>(make_shared<Stack>());
+		ptr = dynamic_pointer_cast<VBase>(make_shared<Stack>());
+		ptr.operator*().InPut('2');
+		return &ptr;
+		break;
 	default:
 		cout << "error Type" << endl;
 		return NULL;

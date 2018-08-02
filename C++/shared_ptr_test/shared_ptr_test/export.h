@@ -17,4 +17,7 @@ enum Type
 	TypeMax,
 };
 
-VBasePtr __stdcall CreateVBase(Type t);
+extern "C"
+{
+	VBasePtr* __stdcall CreateVBase(Type t);
+}

@@ -5,27 +5,40 @@
 #include "../shared_ptr_test/export.h"
 
 vector<VBasePtr> ptr_v;
+vector<VBasePtr*> pptr_v;
 int Test1()
 {
-	auto itr = CreateVBase(STACK);
-	itr->InPut('a');
-	itr->InPut('b');
-	itr->InPut('c');
-	itr->OutPut();
-	auto source = itr.get();
-	cout << itr.use_count() << endl;
-	auto pp = itr;
-	cout << itr.use_count() << endl;
+	VBasePtr* rt;
+	rt = CreateVBase(STACK);
+	cout << "create" << endl;
+	(*rt)->InPut('a');
+	(*rt)->InPut('b');
+	(*rt)->InPut('c');
+	rt->get()->InPut('p');
+	(*rt)->InPut('b');
+	(*rt)->OutPut();
+	auto source = (*rt).get();
+	cout << (*rt).use_count() << endl;
+	auto pp = (*rt);
+	cout << (*rt).use_count() << endl;
 	ptr_v.push_back(pp);
-	ptr_v.push_back(itr);
-	cout << itr.use_count() << endl;
+	ptr_v.push_back((*rt));
+	cout << (*rt).use_count() << endl;
 	cout << pp.use_count() << endl;
 	ptr_v.pop_back();
-	cout << itr.use_count() << endl;
+	
+	cout << (*rt).use_count() << endl;
+	pptr_v.push_back(rt);
 	cout << pp.use_count() << endl;
+	ptr_v.push_back(*rt);
+	cout << rt->use_count() << endl;
+	ptr_v.push_back(*rt);
+	cout << (*rt).use_count() << endl;
+	ptr_v.push_back((*rt));
+	cout << rt->use_count() << endl;
 #ifndef USE_SHARED_PTR
 	// 需要显示调用delete
-	delete itr;
+	delete (*rt);
 #endif // !USE_SHARED_PTR
 	return 0;
 }
