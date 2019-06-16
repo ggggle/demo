@@ -50,7 +50,10 @@ static void ThreadRun()
 	int i = 0;
 	do
 	{
-		compute_v[i]->PushTask(enum_v);
+		while (false == compute_v[i]->PushTask(enum_v))
+		{
+			this_thread::sleep_for(chrono::microseconds(100));
+		}
 		if (THREAD_NUM == ++i) {
 			i = 0;
 		}

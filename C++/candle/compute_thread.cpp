@@ -11,11 +11,17 @@ ComputeThread::ComputeThread():
 
 }
 
-void ComputeThread::PushTask(std::vector<size_t> enum_v)
+bool ComputeThread::PushTask(const std::vector<size_t>& enum_v)
 {
 	m_task_v_lock.lock();
+	if (m_task_v.size() > 1e6)
+	{
+		m_task_v_lock.unlock();
+		return false;
+	}
 	m_task_v.emplace_back(enum_v);
 	m_task_v_lock.unlock();
+	return true;
 }
 
 void ComputeThread::PutVec(const vector<size_t>& vec)
@@ -43,6 +49,7 @@ void ComputeThread::run(ComputeThread* self)
 	});
 	Layout _layout;
 	vector<vector<size_t> > task_v;
+	OneCandle candle = OneCandle();
 	while (true)
 	{
 		self->m_task_v_lock.lock();
@@ -55,7 +62,6 @@ void ComputeThread::run(ComputeThread* self)
 		for (const auto& enum_v : task_v)
 		{
 			int no_use_lights = 0;
-			OneCandle candle = OneCandle();
 			for (const auto& candle_pot : enum_v)
 			{
 				candle.m_x = all_pot[candle_pot].first;

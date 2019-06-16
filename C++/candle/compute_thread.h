@@ -8,7 +8,7 @@ class ComputeThread
 public:
 	ComputeThread();
 	~ComputeThread() = default;
-	void PushTask(std::vector<size_t> enum_v);
+	bool PushTask(const std::vector<size_t>& enum_v);
 	static void PutVec(const std::vector<size_t>& vec);
 private:
 	static void run(ComputeThread* self);
